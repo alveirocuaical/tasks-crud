@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django CRUD Application</title>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <a href="/tasks">Tasks</a>
+            </li>
+            <li>
+                <a href="{% url "create-task" %}">Create task</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li>
+                <a href="{% url "logout" %}">logout</a>
+            </li>            
+            {% else %}
+            <li>
+                <a href="signup">Signup</a>
+            </li>
+            <li>
+                <a href="{% url "login" %}">Login</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    {% if error %}
+        {{error}}
+    {% endif %}
+    {% block content %}
+    {% endblock content %}
+    
+</body>
+</html>

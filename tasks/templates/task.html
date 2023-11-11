@@ -1,0 +1,21 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<h1>Tasks</h1>
+
+{% if user.is_authenticated %}
+    <span>Lista de tareas</span>
+    <ul>
+        {% for task in tasks %}
+            <li>
+                <h4>{{task.title}}</h4>
+                <p> {{task.description}} </p>
+                <p> {{task.user.username}} </p>
+                <p> <input type="checkbox" {% if task.important %}checked{% endif %}>Important</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <span>Login for loking your tasks</span>
+{% endif %}
+
+{% endblock content %}

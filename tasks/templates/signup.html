@@ -1,0 +1,15 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+<h1>Signup</h1>
+
+{% if error  %}
+    <span>{{error}}</span>
+{% endif %}
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button>Send</button>
+</form>
+{% endblock content %}
+
