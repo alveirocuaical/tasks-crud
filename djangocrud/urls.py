@@ -28,4 +28,8 @@ urlpatterns = [
     path('logout', views.signout, name='logout'),
     path('signin', views.signin, name='login'),
     path('task/create', views.create_task, name='create-task'),
+    path('task-detail/<int:task_id>/', views.task_detail, name='task-detail'),
+    path('task-delete/<int:task_id>/', views.task_delete, name='task-delete'),
+    path('task-complete/<int:task_id>/', views.task_done, name='task-complete'),
+    path('tasks-completed', views.completed_task, name='task-completed'),
 ]

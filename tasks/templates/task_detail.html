@@ -1,0 +1,31 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<h1>Task Detail</h1>
+
+{% if user.is_authenticated %}
+    <h2> {{task.title}} </h2>
+    
+    
+    {% if task.datecompleted == Null %}
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button>Update</button>
+        </form> <br>
+        <form action="{% url "task-complete" task.id %}" method="POST">
+            {% csrf_token %}
+            <button>Complete</button>
+        </form> <br>
+    {% else %}
+        {{task.description}}
+    {% endif %}
+    <form action="{% url "task-delete" task.id %}" method="POST">
+        {% csrf_token %}
+        <button>Delete</button>
+    </form>
+    
+{% else %}
+    <span>Login for loking your tasks</span>
+{% endif %}
+
+{% endblock content %}

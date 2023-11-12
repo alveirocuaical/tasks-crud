@@ -15,10 +15,12 @@
             <li>
                 <a href="/tasks">Tasks</a>
             </li>
+            
+            {% if user.is_authenticated %}
             <li>
                 <a href="{% url "create-task" %}">Create task</a>
             </li>
-            {% if user.is_authenticated %}
+            
             <li>
                 <a href="{% url "logout" %}">logout</a>
             </li>            

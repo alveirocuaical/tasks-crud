@@ -1,10 +1,9 @@
 {% extends "layouts/base.html" %}
 {% block content %}
-<h1>Tasks</h1>
+<h1>Tasks completed</h1>
 
 {% if user.is_authenticated %}
-    <span>Lista de tareas</span>
-    <h3><a href="{% url "task-completed" %}">See completed tasks</a></h3>
+    <span>Completed tasks list</span>
     <ul>
         {% for task in tasks %}
             <li>

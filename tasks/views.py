@@ -1,5 +1,6 @@
-from hmac import new
-from django.shortcuts import redirect, render
+
+from datetime import datetime
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
@@ -87,3 +88,44 @@ def create_task(request):
     return render(request, 'create_task.html', {
         'form': form
     })
+
+
+def task_detail(request, task_id):
+    
+    task = get_object_or_404(Task, id = task_id, user_id=request.user)
+    if task.user != request.user:
+        return redirect('tasks')
+    form = CreateTaskForm(instance=task)
+    if request.method == 'POST':
+        form = CreateTaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            return redirect('tasks')
+    return render(request, 'task_detail.html', {'task': task, 'form': form})
+
+
+def task_delete(request, task_id):
+    
+    task = get_object_or_404(Task, id = task_id, user_id=request.user)
+    if task.user != request.user:
+        return redirect('tasks')
+    if request.method == 'POST':
+        task.delete()
+        return redirect('tasks')
+    return redirect('tasks')
+
+def task_done(request, task_id):
+    
+    task = get_object_or_404(Task, id = task_id, user_id=request.user)
+    if task.user != request.user:
+        return redirect('tasks')
+    if request.method == 'POST':
+        task.datecompleted = datetime.now()
+        task.save()
+        return redirect('tasks')
+    
+    return redirect('tasks')
+
+def completed_task(request):
+    tasks = Task.objects.filter(user=request.user, datecompleted__isnull=False).order_by('-datecompleted')
+    return render(request, 'completed-tasks.html', {'tasks': tasks})
